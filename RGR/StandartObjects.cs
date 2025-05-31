@@ -1,5 +1,6 @@
 ﻿// file that contains standart objects that propose a program
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace RGR
@@ -60,4 +61,16 @@ namespace RGR
             return Math.Pow(p.X - centerX, 2) + Math.Pow(p.Y - centerY, 2) <= radius * radius;
         }
     }
+    public class BrushStroke
+    {
+        public List<Point> Points { get; set; }
+        public Color StrokeColor { get; set; }
+
+        public BrushStroke(List<Point> points, Color color)
+        {
+            Points = points;
+            StrokeColor = color;
+        }
+    }
+
 }

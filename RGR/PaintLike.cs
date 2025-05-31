@@ -19,10 +19,12 @@ namespace RGR
         private List<Circle> circles = new List<Circle>();
         private Circle selectedCircle = null;
 
-        private List<List<Point>> brushStrokes = new List<List<Point>>();
+        private List<BrushStroke> brushStrokes = new List<BrushStroke>();
 
         private Point offset;
         private bool isMousePressed = false;
+        private bool isBrushMode = false;
+
         private ArrayPoints arrayPoints = new ArrayPoints();
         public PaintLike()
         {
@@ -54,8 +56,13 @@ namespace RGR
 
             foreach (var stroke in brushStrokes)
             {
-                if (stroke.Count >= 2)
-                    graphics.DrawLines(pen, stroke.ToArray());
+                if (stroke.Points.Count >= 2)
+                {
+                    using (Pen strokePen = new Pen(stroke.StrokeColor, pen.Width))
+                    {
+                        graphics.DrawLines(strokePen, stroke.Points.ToArray());
+                    }
+                }
             }
 
             foreach (var shape in shapes)
@@ -79,6 +86,13 @@ namespace RGR
         #region PicturebBox
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
         {
+            if (isBrushMode)
+            {
+                isMousePressed = true;
+                arrayPoints.ResetPoints();
+                arrayPoints.SetPoint(e.X, e.Y);
+                return;
+            }
             foreach (var shape in shapes)
             {
                 if (shape.Contains(e.Location))
@@ -103,7 +117,7 @@ namespace RGR
         private void pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             if (arrayPoints.GetCountOfPoints() >= 2)
-                brushStrokes.Add(arrayPoints.GetPoints().ToList());
+                brushStrokes.Add(new BrushStroke(arrayPoints.GetPoints().ToList(), pen.Color));
 
             isMousePressed = false;
             selectedShape = null;
@@ -120,13 +134,13 @@ namespace RGR
                                                        selectedShape.Rect.Width, selectedShape.Rect.Height);
                     RedrawAll();
                 }
-                if (selectedCircle != null)
+                else if (selectedCircle != null)
                 {
                     selectedCircle.Rect = new RectangleF(e.X - offset.X, e.Y - offset.Y,
                                                          selectedCircle.Rect.Width, selectedCircle.Rect.Height);
                     RedrawAll();
                 }
-                else
+                else if (isBrushMode)
                 {
                     arrayPoints.SetPoint(e.X, e.Y);
                     if (arrayPoints.GetCountOfPoints() >= 2)
@@ -223,24 +237,25 @@ namespace RGR
         private void button11_Click(object sender, EventArgs e)
         {
             currentShape = ShapeType.Square;
+            isBrushMode = false;
         }
-
         // Прямокутник
         private void button12_Click(object sender, EventArgs e)
         {
             currentShape = ShapeType.Rectangle;
+            isBrushMode = false;
         }
-
-        // Пензлик
-        private void button13_Click(object sender, EventArgs e)
-        {
-            currentShape = ShapeType.None;
-        }
-
         // Коло
         private void button14_Click(object sender, EventArgs e)
         {
             currentShape = ShapeType.Circle;
+            isBrushMode = false;
+        }
+        // Пензлик
+        private void button13_Click(object sender, EventArgs e)
+        {
+            currentShape = ShapeType.None;
+            isBrushMode = true;
         }
         private void groupBox1_Enter(object sender, EventArgs e)
         {
