@@ -42,6 +42,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button14 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
@@ -49,7 +50,6 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button14 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -72,7 +72,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(6, 394);
+            this.button1.Location = new System.Drawing.Point(24, 394);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(139, 44);
             this.button1.TabIndex = 1;
@@ -91,7 +91,7 @@
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
-            this.panel1.Location = new System.Drawing.Point(7, 273);
+            this.panel1.Location = new System.Drawing.Point(24, 273);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(138, 106);
             this.panel1.TabIndex = 2;
@@ -190,7 +190,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(47, 250);
+            this.label1.Location = new System.Drawing.Point(58, 250);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 20);
             this.label1.TabIndex = 3;
@@ -203,10 +203,20 @@
             this.panel2.Controls.Add(this.button13);
             this.panel2.Controls.Add(this.button12);
             this.panel2.Controls.Add(this.button11);
-            this.panel2.Location = new System.Drawing.Point(6, 31);
+            this.panel2.Location = new System.Drawing.Point(24, 31);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(138, 154);
             this.panel2.TabIndex = 4;
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(18, 43);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(102, 25);
+            this.button14.TabIndex = 9;
+            this.button14.Text = "Circle";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // button13
             // 
@@ -242,7 +252,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(37, 9);
+            this.label2.Location = new System.Drawing.Point(56, 8);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 20);
             this.label2.TabIndex = 5;
@@ -250,17 +260,18 @@
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(10, 202);
+            this.trackBar1.Location = new System.Drawing.Point(24, 202);
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(131, 45);
+            this.trackBar1.Size = new System.Drawing.Size(138, 45);
             this.trackBar1.TabIndex = 6;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(38, 188);
+            this.label3.Location = new System.Drawing.Point(57, 188);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 16);
             this.label3.TabIndex = 7;
@@ -280,18 +291,7 @@
             this.groupBox1.Size = new System.Drawing.Size(190, 451);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Box";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
-            // button14
-            // 
-            this.button14.Location = new System.Drawing.Point(18, 43);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(102, 25);
-            this.button14.TabIndex = 9;
-            this.button14.Text = "Circle";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // Form1
             // 

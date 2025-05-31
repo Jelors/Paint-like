@@ -52,6 +52,9 @@ namespace RGR
             foreach (var shape in shapes)
                 shape.Draw(graphics);
 
+            foreach (var circle in circles)
+                circle.Draw(graphics);
+
             pictureBox1.Image = bitmap;
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -76,6 +79,15 @@ namespace RGR
                     return;
                 }
             }
+            foreach (var circle in circles)
+            {
+                if (circle.Contains(e.Location))
+                {
+                    selectedCircle = circle;
+                    offset = new Point(e.X - (int)circle.Rect.X, e.Y - (int)circle.Rect.Y);
+                    return;
+                }
+            }
             isMousePressed = true;
         }
 
@@ -83,6 +95,7 @@ namespace RGR
         {
             isMousePressed = false;
             selectedShape = null;
+            selectedCircle = null;
             arrayPoints.ResetPoints();
         }
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
@@ -93,6 +106,12 @@ namespace RGR
                 {
                     selectedShape.Rect = new Rectangle(e.X - offset.X, e.Y - offset.Y,
                                                        selectedShape.Rect.Width, selectedShape.Rect.Height);
+                    RedrawAll();
+                }
+                if (selectedCircle != null)
+                {
+                    selectedCircle.Rect = new RectangleF(e.X - offset.X, e.Y - offset.Y,
+                                                         selectedCircle.Rect.Width, selectedCircle.Rect.Height);
                     RedrawAll();
                 }
                 else
@@ -111,10 +130,19 @@ namespace RGR
             if (currentShape == ShapeType.None)
                 return;
 
-            int w = currentShape == ShapeType.Square ? 100 : 200;
+            int w = currentShape == ShapeType.Square ? 100 :
+                    currentShape == ShapeType.Rectangle ? 200 : 100;
             int h = 100;
 
-            shapes.Add(new Shape(currentShape, new Rectangle(e.X, e.Y, w, h), pen.Color));
+            if (currentShape == ShapeType.Circle)
+            {
+                circles.Add(new Circle(new RectangleF(e.X, e.Y, w, h), pen.Color));
+            }
+            else
+            {
+                shapes.Add(new Shape(currentShape, new Rectangle(e.X, e.Y, w, h), pen.Color));
+            }
+
             RedrawAll();
         }
         #endregion
@@ -168,6 +196,7 @@ namespace RGR
         private void button1_Click(object sender, EventArgs e)
         {
             shapes.Clear();
+            circles.Clear();
             graphics.Clear(pictureBox1.BackColor);
             pictureBox1.Image = bitmap;
         }
@@ -210,7 +239,10 @@ namespace RGR
             currentShape = ShapeType.Circle;
         }
 
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
 
+        }
     }
     public class Shape
     {
@@ -243,22 +275,29 @@ namespace RGR
     }
     public class Circle
     {
-        public ShapeType Type;
         public RectangleF Rect;
         public Color Color;
 
-        public Circle(ShapeType type, RectangleF rect, Color color)
+        public Circle(RectangleF rect, Color color)
         {
-            Type = type;
             Rect = rect;
             Color = color;
         }
-        public  void DrawCircle(Graphics g)
+
+        public void Draw(Graphics g)
         {
             using (Pen p = new Pen(Color, 3))
             {
                 g.DrawEllipse(p, Rect);
             }
+        }
+
+        public bool Contains(Point p)
+        {
+            float centerX = Rect.X + Rect.Width / 2;
+            float centerY = Rect.Y + Rect.Height / 2;
+            float radius = Rect.Width / 2;
+            return Math.Pow(p.X - centerX, 2) + Math.Pow(p.Y - centerY, 2) <= radius * radius;
         }
     }
     // TODO: Створення круга, трикутника. В теорії заповнення фігур кольором;
