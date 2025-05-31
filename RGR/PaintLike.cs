@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace RGR
 {
-    public partial class Form1 : Form
+    public partial class PaintLike : Form
     {
         private Bitmap bitmap;
         private Graphics graphics;
@@ -18,10 +19,12 @@ namespace RGR
         private List<Circle> circles = new List<Circle>();
         private Circle selectedCircle = null;
 
+        private List<List<Point>> brushStrokes = new List<List<Point>>();
+
         private Point offset;
         private bool isMousePressed = false;
         private ArrayPoints arrayPoints = new ArrayPoints();
-        public Form1()
+        public PaintLike()
         {
             InitializeComponent();
             SetSize();
@@ -48,6 +51,13 @@ namespace RGR
         private void RedrawAll()
         {
             graphics.Clear(pictureBox1.BackColor);
+
+            foreach (var stroke in brushStrokes)
+            {
+                if (stroke.Count >= 2)
+                    graphics.DrawLines(pen, stroke.ToArray());
+            }
+
             foreach (var shape in shapes)
                 shape.Draw(graphics);
 
@@ -92,6 +102,9 @@ namespace RGR
 
         private void pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
+            if (arrayPoints.GetCountOfPoints() >= 2)
+                brushStrokes.Add(arrayPoints.GetPoints().ToList());
+
             isMousePressed = false;
             selectedShape = null;
             selectedCircle = null;
@@ -196,6 +209,7 @@ namespace RGR
         {
             shapes.Clear();
             circles.Clear();
+            brushStrokes.Clear();
             graphics.Clear(pictureBox1.BackColor);
             pictureBox1.Image = bitmap;
         }
