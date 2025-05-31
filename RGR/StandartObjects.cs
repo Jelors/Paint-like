@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace RGR
 {
-    public class Shape
+    public class Shape : Form1
     {
         public ShapeType Type;
         public Rectangle Rect;

@@ -9,8 +9,8 @@ namespace RGR
     {
         private Bitmap bitmap;
         private Graphics graphics;
-        private Pen pen = new Pen(Color.Black, 3f);
         private ShapeType currentShape = ShapeType.None;
+        private Pen pen = new Pen(Color.Black, 3f);
 
         private List<Shape> shapes = new List<Shape>();
         private Shape selectedShape = null;
@@ -203,12 +203,7 @@ namespace RGR
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             pen.Width = trackBar1.Value;
-
         }
-
-        // TODO: доробить створення і спавн фігур, зробить шоб не можна було одночасно
-        // створити декілька екземплярів фігур, після натискання різних функціональних клавіш,
-        // розбить весь код на частини для кращої читабельності. Last Change: 9/5/2025
 
         // Квадрат
         private void button11_Click(object sender, EventArgs e)
@@ -243,8 +238,4 @@ namespace RGR
 
         }
     }
-    
-    // TODO: Створення круга, трикутника. В теорії заповнення фігур кольором;
-    // Трошки змінити дизайн, і спробувати пофіксить малювання на максимальному розмірі вікна(optional).
-    // Last change: 23/05/2025
 }
