@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 namespace RGR
 {
-    public enum ShapeType { None, Square, Rectangle, Circle }
     public partial class Form1 : Form
     {
         private Bitmap bitmap;
@@ -244,62 +243,7 @@ namespace RGR
 
         }
     }
-    public class Shape
-    {
-        public ShapeType Type;
-        public Rectangle Rect;
-        public Color Color;
-
-        public Shape(ShapeType type, Rectangle rect, Color color)
-        {
-            Type = type;
-            Rect = rect;
-            Color = color;
-        }
-
-        public void Draw(Graphics g)
-        {
-            using (Pen p = new Pen(Color, 3))
-            {
-                switch (Type)
-                {
-                    case ShapeType.Square:
-                    case ShapeType.Rectangle:
-                        g.DrawRectangle(p, Rect);
-                        break;
-                }
-            }
-        }
-
-        public bool Contains(Point p) => Rect.Contains(p);
-    }
-    public class Circle
-    {
-        public RectangleF Rect;
-        public Color Color;
-
-        public Circle(RectangleF rect, Color color)
-        {
-            Rect = rect;
-            Color = color;
-        }
-
-        public void Draw(Graphics g)
-        {
-            using (Pen p = new Pen(Color, 3))
-            {
-                g.DrawEllipse(p, Rect);
-            }
-        }
-
-        public bool Contains(Point p)
-        {
-            float centerX = Rect.X + Rect.Width / 2;
-            float centerY = Rect.Y + Rect.Height / 2;
-            float radius = Rect.Width / 2;
-            return Math.Pow(p.X - centerX, 2) + Math.Pow(p.Y - centerY, 2) <= radius * radius;
-        }
-    }
+    
     // TODO: Створення круга, трикутника. В теорії заповнення фігур кольором;
     // Трошки змінити дизайн, і спробувати пофіксить малювання на максимальному розмірі вікна(optional).
     // Last change: 23/05/2025
